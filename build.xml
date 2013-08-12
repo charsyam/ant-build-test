@@ -34,6 +34,22 @@
     <fileset dir="${pmd.home}/lib" includes="*.jar" />
     </path>
 
+    <property name="findbugs.home" value="/home/charsyam/findbugs" />
+    <path id="findbugs.classpath">
+    <pathelement location="${findbugs.home}" />
+    <fileset dir="${findbugs.home}/lib" includes="*.jar" />
+    </path>
+
+    <taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask" classpathref="findbugs.classpath"/>
+    <target name="findbugs">
+    <mkdir dir="./report/findbugs"/>
+    <findbugs home="${findbugs.home}" output="xml" outputFile="report/findbugs/findbugs.xml" jvmargs="-Xms512M -Xmx1024M " timeout="1800000">
+    <sourcePath path="src" />
+    <class location="${classes.dir}" />
+    </findbugs>
+    </target>
+   
+
     <taskdef name="pmd" classname="net.sourceforge.pmd.ant.PMDTask"/>
     <target name="pmd">
     <pmd shortFilenames="true">
